@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from '../../../elements/Button'
 import { tableHeaders } from '../constants'
-import Button from '../../Button'
 
 const DataRow = ({ id, systemName, type, hddCapacity }) => {
   return (

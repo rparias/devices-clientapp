@@ -16,10 +16,10 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        <DataRow systemName="SUSAN-DESKTOP" type="Windows Workstation" hddCapacity={128} />
-        <DataRow systemName="MAC-LOCAL-FREDDY" type="Mac" hddCapacity={512} />
-        <DataRow systemName="smart-server" type="Windows Server" hddCapacity={1024} />
-        <DataRow systemName="ronald-mac" type="Mac" hddCapacity={256} />
+        <DataRow id="1" systemName="SUSAN-DESKTOP" type="Windows Workstation" hddCapacity={128} />
+        <DataRow id="2" systemName="MAC-LOCAL-FREDDY" type="Mac" hddCapacity={512} />
+        <DataRow id="3" systemName="smart-server" type="Windows Server" hddCapacity={1024} />
+        <DataRow id="4" systemName="ronald-mac" type="Mac" hddCapacity={256} />
       </tbody>
     </TableContainer>
   )

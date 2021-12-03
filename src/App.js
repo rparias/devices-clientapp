@@ -1,7 +1,7 @@
 import React from 'react'
 import GlobalStyle from './globalStyles'
-import Button from './components/Elements/Button/Button'
-import Table from './components/Elements/Table'
+import Button from './components/elements/Button'
+import Table from './components/patterns/Table'
 
 function App() {
   return (
