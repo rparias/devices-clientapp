@@ -12,7 +12,7 @@ const InputField = ({
   onChange
 }) => {
   return (
-    <InputFieldContainer>
+    <InputFieldContainer className="flex">
       {label && (
         <label htmlFor={`input-field-${name}`} data-testid="label-element">
           {label}
