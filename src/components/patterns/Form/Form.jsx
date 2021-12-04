@@ -8,6 +8,7 @@ import FormContainer from './styles'
 const Form = ({ handleOnClose }) => {
   const handleOnSubmit = (e) => {
     e.preventDefault()
+    console.log('Form submitted')
     handleOnClose()
   }
 
