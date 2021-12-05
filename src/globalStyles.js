@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     --clr-red: 6 78% 57%;
     --clr-green: 145 63% 49%;
     --clr-blue: 204 70% 53%;
+    --clr-beige: 183 8% 61%;
 
     /* font-sizes */
     --fs-900: 9.375rem;
@@ -113,6 +114,10 @@ const GlobalStyle = createGlobalStyle`
     gap: var(--gap, 1rem);
   }
 
+  .space-between {
+    justify-content: space-between;
+  }
+
   .grid {
     display: grid;
     gap: var(--gap, 1rem);
@@ -149,6 +154,7 @@ const GlobalStyle = createGlobalStyle`
   .bg-blue { background-color: hsl( var(--clr-blue) );}
   .bg-red { background-color: hsl( var(--clr-red) );}
   .bg-green { background-color: hsl( var(--clr-green) );}
+  .bg-beige { background-color: hsl( var(--clr-beige) );}
 
   .text-dark { color: hsl( var(--clr-dark) );}
   .text-accent { color: hsl( var(--clr-light) );}
