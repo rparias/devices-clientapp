@@ -1,11 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import DropdownContainer from './styles'
-import { optionList } from './constants'
 
-const Dropdown = ({ label, name, options }) => {
-  const optionsDropdown = options || optionList
-
+const Dropdown = ({ label, name, optionsDropdown }) => {
   return (
     <DropdownContainer className="flex">
       {label && (
@@ -29,7 +26,7 @@ Dropdown.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   id: PropTypes.string,
-  options: PropTypes.array
+  optionsDropdown: PropTypes.array.isRequired
 }
 
 export default Dropdown
