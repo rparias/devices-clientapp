@@ -27,7 +27,7 @@ DataRow.propTypes = {
   id: PropTypes.string.isRequired,
   systemName: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  hddCapacity: PropTypes.number.isRequired
+  hddCapacity: PropTypes.string.isRequired
 }
 
 export default DataRow

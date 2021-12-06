@@ -5,9 +5,11 @@ import Table from '../../components/patterns/Table'
 import ModalDialog from '../../components/patterns/ModalDialog'
 import { DashboardContainer, HeaderContainer } from './styles'
 import { filterDeviceTypeList, filterSortByList } from '../../data/dropdown_options'
+import { devices } from '../../data/mocks'
 
 const Dashboard = () => {
   const [openDialog, setOpenDialog] = useState(false)
+  const [devicesList, setDevicesList] = useState(devices)
 
   const handleOnOpenDialog = () => {
     setOpenDialog(true)
@@ -31,7 +33,7 @@ const Dashboard = () => {
           <Button onClick={handleOnOpenDialog}>Add Device</Button>
         </div>
         <ModalDialog open={openDialog} handleOnClose={handleOnCloseDialog} />
-        <Table />
+        <Table devicesData={devicesList} />
       </DashboardContainer>
     </>
   )

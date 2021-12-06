@@ -74,9 +74,10 @@ const Form = ({ handleOnClose, device }) => {
 Form.propTypes = {
   handleOnClose: PropTypes.func,
   device: PropTypes.shape({
-    systemName: PropTypes.string,
-    type: PropTypes.string,
-    hddCapacity: PropTypes.number
+    id: PropTypes.string.isRequired,
+    system_name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    hdd_capacity: PropTypes.string.isRequired
   })
 }
 

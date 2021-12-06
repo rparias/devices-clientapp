@@ -21,6 +21,7 @@ module.exports = {
   plugins: ['react', 'testing-library', 'jest-dom'],
   rules: {
     semi: ['error', 'never'],
+    'multiline-ternary': ['error', 'never'],
     'space-before-function-paren': [
       'error',
       {
