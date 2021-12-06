@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DropdownContainer from './styles'
 
-const Dropdown = ({ label, name, optionsDropdown }) => {
+const Dropdown = ({ label, name, optionsDropdown, onChange }) => {
   return (
     <DropdownContainer className="flex">
       {label && (
@@ -11,7 +11,7 @@ const Dropdown = ({ label, name, optionsDropdown }) => {
         </label>
       )}
 
-      <select name={name} id={`input-combo-${name}`}>
+      <select name={name} id={`input-combo-${name}`} onChange={onChange}>
         {optionsDropdown.map((option) => (
           <option key={option.id} value={option.value}>
             {option.label}
@@ -26,7 +26,8 @@ Dropdown.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   id: PropTypes.string,
-  optionsDropdown: PropTypes.array.isRequired
+  optionsDropdown: PropTypes.array.isRequired,
+  onChange: PropTypes.func
 }
 
 export default Dropdown

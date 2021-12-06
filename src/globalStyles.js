@@ -159,6 +159,7 @@ const GlobalStyle = createGlobalStyle`
   .text-dark { color: hsl( var(--clr-dark) );}
   .text-accent { color: hsl( var(--clr-light) );}
   .text-white { color: hsl( var(--clr-white) );}
+  .text-red { color: hsl( var(--clr-red) );}
 
   /* TYPOGRAPHY */
   .ff-serif { font-family: var(--ff-serif); } 

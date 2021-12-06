@@ -22,4 +22,9 @@ describe('InputField Component', () => {
     render(<InputField name="test" type="checkbox" />)
     expect(screen.getByRole('checkbox')).toBeInTheDocument()
   })
+
+  it('should display an error when is passed as prop', () => {
+    render(<InputField name="test" error="error test" />)
+    expect(screen.getByText('error test')).toBeInTheDocument()
+  })
 })
