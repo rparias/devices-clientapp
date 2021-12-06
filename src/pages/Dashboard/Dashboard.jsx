@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '../../components/elements/Button'
 import Dropdown from '../../components/elements/Dropdown'
 import Table from '../../components/patterns/Table'
+import CircularProgress from '@mui/material/CircularProgress'
 import ModalDialog from '../../components/patterns/ModalDialog'
 import { DashboardContainer, HeaderContainer } from './styles'
 import { filterDeviceTypeList, filterSortByList } from '../../data/dropdown_options'
-import { devices } from '../../data/mocks'
+import Api from '../../helper/api'
 
 const Dashboard = () => {
+  const api = new Api()
   const [openDialog, setOpenDialog] = useState(false)
-  const [devicesList, setDevicesList] = useState(devices)
+  const [devicesList, setDevicesList] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
 
   const handleOnOpenDialog = () => {
     setOpenDialog(true)
@@ -18,6 +22,23 @@ const Dashboard = () => {
   const handleOnCloseDialog = () => {
     setOpenDialog(false)
   }
+
+  useEffect(() => {
+    setIsLoading(true)
+    const fetchDevices = async () => {
+      try {
+        const response = await api.getDevices()
+        setDevicesList(response.data)
+        setHasError(false)
+      } catch (error) {
+        setHasError(true)
+        console.error(error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchDevices()
+  }, [])
 
   return (
     <>
@@ -33,7 +54,8 @@ const Dashboard = () => {
           <Button onClick={handleOnOpenDialog}>Add Device</Button>
         </div>
         <ModalDialog open={openDialog} handleOnClose={handleOnCloseDialog} />
-        <Table devicesData={devicesList} />
+        {isLoading ? <CircularProgress /> : <Table devicesData={devicesList} />}
+        {hasError && <p className="text-red">Something went wrong, please try again!</p>}
       </DashboardContainer>
     </>
   )

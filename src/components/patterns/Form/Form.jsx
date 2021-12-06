@@ -6,9 +6,11 @@ import InputField from '../../elements/InputField/InputField'
 import FormContainer from './styles'
 import { optionTypeList } from '../../../data/dropdown_options'
 import { validateForm } from './utils'
+import Api from '../../../helper/api'
 
 const Form = ({ handleOnClose, device }) => {
-  const initialValues = { name: '', type: 'windows-workstation', capacity: undefined }
+  const api = new Api()
+  const initialValues = { name: '', type: optionTypeList[0].value, capacity: undefined }
 
   const [formValues, setFormValues] = useState(device || initialValues)
   const [formErrors, setFormErrors] = useState({})
@@ -25,10 +27,36 @@ const Form = ({ handleOnClose, device }) => {
     setFormValues({ ...formValues, [name]: value })
   }
 
+  const updateDevice = () => {
+    console.log('update device')
+  }
+
+  const createDevice = async () => {
+    try {
+      const newDevice = {
+        system_name: formValues.name,
+        type: formValues.type,
+        hdd_capacity: formValues.capacity
+      }
+      await api.addNewDevice(newDevice)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleOnCloseForm = () => {
+    handleOnClose()
+    window.location.reload(false)
+  }
+
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmitted) {
-      console.log('Form submitted')
-      handleOnClose()
+      if (device) {
+        updateDevice()
+      } else {
+        createDevice()
+      }
+      handleOnCloseForm()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formErrors])

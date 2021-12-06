@@ -1,17 +1,17 @@
 const optionTypeList = [
   {
     label: 'Windows Workstation',
-    value: 'windows-workstation',
+    value: 'WINDOWS_WORKSTATION',
     id: '1-windows-workstation'
   },
   {
     label: 'Windows Server',
-    value: 'windows-server',
+    value: 'WINDOWS_SERVER',
     id: '2-windows-server'
   },
   {
     label: 'Mac',
-    value: 'mac',
+    value: 'MAC',
     id: '3-mac'
   }
 ]
