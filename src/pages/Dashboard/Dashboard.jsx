@@ -66,15 +66,15 @@ const Dashboard = () => {
   }, [])
 
   useEffect(() => {
-    if (filterBy === 'all') {
-      setFilteredDevicesList(devicesList)
-    } else {
-      setFilteredDevicesList(filterByDeviceType(filterBy, devicesList))
-    }
-  }, [filterBy])
+    let filterDevices = []
 
-  useEffect(() => {
-    const devices = [...filteredDevicesList]
+    if (filterBy === 'all') {
+      filterDevices = [...devicesList]
+    } else {
+      filterDevices = filterByDeviceType(filterBy, devicesList)
+    }
+
+    const devices = [...filterDevices]
     switch (sortBy) {
       case 'hdd-capacity':
         setFilteredDevicesList(sortByHddCapacityLowToHigh(devices))
@@ -85,7 +85,7 @@ const Dashboard = () => {
       default:
         break
     }
-  }, [sortBy])
+  }, [sortBy, filterBy])
 
   return (
     <>
