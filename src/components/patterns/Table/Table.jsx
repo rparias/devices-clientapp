@@ -4,7 +4,7 @@ import TableContainer from './styles'
 import DataRow from './subcomponents/DataRow'
 import { tableHeaders } from './constants'
 
-const Table = ({ devicesData }) => {
+const Table = ({ devicesData, setCurrentDevice }) => {
   return (
     <TableContainer>
       {devicesData.length > 0 ? (
@@ -26,6 +26,7 @@ const Table = ({ devicesData }) => {
                 systemName={device.system_name}
                 type={device.type}
                 hddCapacity={device.hdd_capacity}
+                setCurrentDevice={setCurrentDevice}
               />
             ))}
           </tbody>
@@ -49,7 +50,8 @@ Table.propTypes = {
       type: PropTypes.string.isRequired,
       hdd_capacity: PropTypes.string.isRequired
     })
-  )
+  ),
+  setCurrentDevice: PropTypes.func
 }
 
 export default Table

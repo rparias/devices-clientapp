@@ -64,7 +64,11 @@ const Dashboard = () => {
           handleOnClose={handleOnCloseDialog}
           currentDevice={currentDevice}
         />
-        {isLoading ? <CircularProgress /> : <Table devicesData={devicesList} />}
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Table devicesData={devicesList} setCurrentDevice={setCurrentDevice} />
+        )}
         {hasError && <p className="text-red">Something went wrong, please try again!</p>}
       </DashboardContainer>
     </>

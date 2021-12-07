@@ -3,7 +3,21 @@ import PropTypes from 'prop-types'
 import Button from '../../../elements/Button'
 import { tableHeaders } from '../constants'
 
-const DataRow = ({ id, systemName, type, hddCapacity }) => {
+const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice }) => {
+  const getCurrentDevice = () => {
+    setCurrentDevice({
+      id,
+      name: systemName,
+      type,
+      capacity: hddCapacity
+    })
+  }
+  const handleClickUpdate = () => {
+    getCurrentDevice()
+  }
+  const handleClickDelete = () => {
+    getCurrentDevice()
+  }
   return (
     <tr key={id}>
       <td data-label={tableHeaders.SYSTEM_NAME} className="uppercase">
@@ -12,10 +26,10 @@ const DataRow = ({ id, systemName, type, hddCapacity }) => {
       <td data-label={tableHeaders.TYPE}>{type}</td>
       <td data-label={tableHeaders.HDD_CAPACITY}>{`${hddCapacity} GB`}</td>
       <td data-label={tableHeaders.ACTIONS} className="flex" style={{ justifyContent: 'center' }}>
-        <Button variant="secondary" size="sm" onClick={() => {}}>
+        <Button variant="secondary" size="sm" onClick={handleClickUpdate}>
           Update
         </Button>
-        <Button variant="danger" size="sm" onClick={() => {}}>
+        <Button variant="danger" size="sm" onClick={handleClickDelete}>
           Delete
         </Button>
       </td>
@@ -27,7 +41,8 @@ DataRow.propTypes = {
   id: PropTypes.string.isRequired,
   systemName: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  hddCapacity: PropTypes.string.isRequired
+  hddCapacity: PropTypes.string.isRequired,
+  setCurrentDevice: PropTypes.func
 }
 
 export default DataRow
