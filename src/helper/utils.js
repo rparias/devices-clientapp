@@ -3,7 +3,6 @@ export const filterByDeviceType = (deviceType, devices) => {
 }
 
 export const sortInAlphabeticalOrder = (devices) => {
-  console.log('sortInAlphabeticalOrder', devices)
   return devices.sort((a, b) => {
     if (a.system_name < b.system_name) {
       return -1
@@ -16,7 +15,6 @@ export const sortInAlphabeticalOrder = (devices) => {
 }
 
 export const sortByHddCapacityLowToHigh = (devices) => {
-  console.log('sortByHddCapacityLowToHigh', devices)
   return devices.sort((a, b) => {
     if (parseInt(a.hdd_capacity) < parseInt(b.hdd_capacity)) {
       return -1

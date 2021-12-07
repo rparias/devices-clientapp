@@ -30,7 +30,7 @@ const Form = ({ handleOnClose, device }) => {
   const handleDevice = async () => {
     try {
       const newDevice = {
-        system_name: formValues.name,
+        system_name: formValues.name.toUpperCase(),
         type: formValues.type,
         hdd_capacity: formValues.capacity
       }

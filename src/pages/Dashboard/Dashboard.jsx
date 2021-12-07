@@ -74,12 +74,13 @@ const Dashboard = () => {
   }, [filterBy])
 
   useEffect(() => {
+    const devices = [...filteredDevicesList]
     switch (sortBy) {
       case 'hdd-capacity':
-        setFilteredDevicesList(sortByHddCapacityLowToHigh(filteredDevicesList))
+        setFilteredDevicesList(sortByHddCapacityLowToHigh(devices))
         break
       case 'system-name':
-        setFilteredDevicesList(sortInAlphabeticalOrder(filteredDevicesList))
+        setFilteredDevicesList(sortInAlphabeticalOrder(devices))
         break
       default:
         break
