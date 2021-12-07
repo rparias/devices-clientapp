@@ -13,3 +13,15 @@ export const sortInAlphabeticalOrder = (devices) => {
     return 0
   })
 }
+
+export const sortByHddCapacityLowToHigh = (devices) => {
+  return devices.sort((a, b) => {
+    if (parseInt(a.hdd_capacity) < parseInt(b.hdd_capacity)) {
+      return -1
+    }
+    if (parseInt(a.hdd_capacity) > parseInt(b.hdd_capacity)) {
+      return 1
+    }
+    return 0
+  })
+}
