@@ -44,7 +44,8 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Project structure
 
-This components were made using the [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) methodology.
+The components were made using the [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) methodology.
+
 ```
 .
 ├── src # Source of the project
