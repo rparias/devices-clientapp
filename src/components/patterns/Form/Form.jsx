@@ -5,14 +5,14 @@ import Dropdown from '../../../components/elements/Dropdown'
 import InputField from '../../elements/InputField/InputField'
 import FormContainer from './styles'
 import { optionTypeList } from '../../../data/dropdown_options'
-import { validateForm } from './utils'
+import { validateForm, isObjectEmpty } from './utils'
 import Api from '../../../helper/api'
 
 const Form = ({ handleOnClose, device }) => {
   const api = new Api()
   const initialValues = { name: '', type: optionTypeList[0].value, capacity: undefined }
 
-  const [formValues, setFormValues] = useState(device || initialValues)
+  const [formValues, setFormValues] = useState(isObjectEmpty(device) ? initialValues : device)
   const [formErrors, setFormErrors] = useState({})
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -51,10 +51,12 @@ const Form = ({ handleOnClose, device }) => {
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmitted) {
-      if (device) {
-        updateDevice()
-      } else {
+      if (isObjectEmpty(device)) {
+        console.log('create device')
         createDevice()
+      } else {
+        console.log('update device')
+        updateDevice()
       }
       handleOnCloseForm()
     }
@@ -102,10 +104,10 @@ const Form = ({ handleOnClose, device }) => {
 Form.propTypes = {
   handleOnClose: PropTypes.func,
   device: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    system_name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    hdd_capacity: PropTypes.string.isRequired
+    id: PropTypes.string,
+    system_name: PropTypes.string,
+    type: PropTypes.string,
+    hdd_capacity: PropTypes.string
   })
 }
 

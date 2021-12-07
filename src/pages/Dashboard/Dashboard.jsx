@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [devicesList, setDevicesList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
+  const [currentDevice, setCurrentDevice] = useState({})
 
   const handleOnOpenDialog = () => {
     setOpenDialog(true)
@@ -21,6 +22,11 @@ const Dashboard = () => {
 
   const handleOnCloseDialog = () => {
     setOpenDialog(false)
+  }
+
+  const handleOnAddDevice = () => {
+    setCurrentDevice({})
+    handleOnOpenDialog()
   }
 
   useEffect(() => {
@@ -51,9 +57,13 @@ const Dashboard = () => {
             <Dropdown label="Device Type:" name="type" optionsDropdown={filterDeviceTypeList} />
             <Dropdown label="Sort by:" name="sort" optionsDropdown={filterSortByList} />
           </div>
-          <Button onClick={handleOnOpenDialog}>Add Device</Button>
+          <Button onClick={handleOnAddDevice}>Add Device</Button>
         </div>
-        <ModalDialog open={openDialog} handleOnClose={handleOnCloseDialog} />
+        <ModalDialog
+          open={openDialog}
+          handleOnClose={handleOnCloseDialog}
+          currentDevice={currentDevice}
+        />
         {isLoading ? <CircularProgress /> : <Table devicesData={devicesList} />}
         {hasError && <p className="text-red">Something went wrong, please try again!</p>}
       </DashboardContainer>

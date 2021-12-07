@@ -12,3 +12,7 @@ export const validateForm = (values) => {
   }
   return errors
 }
+
+export const isObjectEmpty = (obj) => {
+  return Object.keys(obj).length === 0
+}
