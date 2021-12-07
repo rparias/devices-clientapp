@@ -45,6 +45,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 ## Project structure
 
 This components were made using the [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) methodology.
+```
 .
 ├── src # Source of the project
 │ ├── components # Any kind of components
@@ -52,3 +53,4 @@ This components were made using the [Atomic Design](https://bradfrost.com/blog/p
 │ │ └── patterns # These components are reusable UI patterns that are composed from the element components
 │ └── pages # These components represent our pages. Are composed by components.
 └── ...
+```
