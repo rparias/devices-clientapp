@@ -17,6 +17,7 @@ const Dashboard = () => {
   const api = new Api()
   const [openDialog, setOpenDialog] = useState(false)
   const [devicesList, setDevicesList] = useState([])
+  const [filteredDevicesList, setFilteredDevicesList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [currentDevice, setCurrentDevice] = useState({})
@@ -52,6 +53,7 @@ const Dashboard = () => {
       try {
         const response = await api.getDevices()
         setDevicesList(response.data)
+        setFilteredDevicesList(sortByHddCapacityLowToHigh(response.data))
         setHasError(false)
       } catch (error) {
         setHasError(true)
@@ -62,6 +64,27 @@ const Dashboard = () => {
     }
     fetchDevices()
   }, [])
+
+  useEffect(() => {
+    if (filterBy === 'all') {
+      setFilteredDevicesList(devicesList)
+    } else {
+      setFilteredDevicesList(filterByDeviceType(filterBy, devicesList))
+    }
+  }, [filterBy])
+
+  useEffect(() => {
+    switch (sortBy) {
+      case 'hdd-capacity':
+        setFilteredDevicesList(sortByHddCapacityLowToHigh(filteredDevicesList))
+        break
+      case 'system-name':
+        setFilteredDevicesList(sortInAlphabeticalOrder(filteredDevicesList))
+        break
+      default:
+        break
+    }
+  }, [sortBy])
 
   return (
     <>
@@ -97,7 +120,7 @@ const Dashboard = () => {
           <CircularProgress />
         ) : (
           <Table
-            devicesData={devicesList}
+            devicesData={filteredDevicesList}
             setCurrentDevice={setCurrentDevice}
             handleOnOpenDialog={handleOnOpenDialog}
           />
