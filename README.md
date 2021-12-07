@@ -3,7 +3,7 @@
 This project was made with React 17.
 During the development of this project a Dashboard to work with devices was implemented.
 
-![image](https://user-images.githubusercontent.com/22307059/145052387-ef54e7b5-a7ff-491b-9a14-58a47af72c2b.png)
+![image](https://user-images.githubusercontent.com/22307059/145078038-6eba1137-65be-421f-a19e-7b65ebebcd03.png)
 
 ## Setup configuration
 
