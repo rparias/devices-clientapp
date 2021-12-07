@@ -4,8 +4,9 @@ import Dropdown from '../../components/elements/Dropdown'
 import Table from '../../components/patterns/Table'
 import CircularProgress from '@mui/material/CircularProgress'
 import ModalDialog from '../../components/patterns/ModalDialog'
+import MultipleSelect from '../../components/patterns/MultipleSelect'
 import { DashboardContainer, HeaderContainer } from './styles'
-import { filterDeviceTypeList, filterSortByList } from '../../data/dropdown_options'
+import { optionTypeList, filterSortByList } from '../../data/dropdown_options'
 import Api from '../../helper/api'
 import {
   filterByDeviceType,
@@ -21,7 +22,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [currentDevice, setCurrentDevice] = useState({})
-  const [filterBy, setFilterBy] = useState('all')
+  const [filterBy, setFilterBy] = useState([])
   const [sortBy, setSortBy] = useState('hdd-capacity')
 
   const handleOnOpenDialog = () => {
@@ -39,7 +40,7 @@ const Dashboard = () => {
 
   const handleOnChangeFilterByDeviceType = (e) => {
     const { value } = e.target
-    setFilterBy(value)
+    setFilterBy(typeof value === 'string' ? value.split(',') : value)
   }
 
   const handleOnChangeSortBy = (e) => {
@@ -68,7 +69,7 @@ const Dashboard = () => {
   useEffect(() => {
     let filterDevices = []
 
-    if (filterBy === 'all') {
+    if (filterBy.length === 0) {
       filterDevices = [...devicesList]
     } else {
       filterDevices = filterByDeviceType(filterBy, devicesList)
@@ -95,12 +96,11 @@ const Dashboard = () => {
       <DashboardContainer>
         <div className="flex space-between options">
           <div className="flex options">
-            <Dropdown
-              label="Device Type:"
-              name="type"
+            <MultipleSelect
               value={filterBy}
               onChange={handleOnChangeFilterByDeviceType}
-              optionsDropdown={filterDeviceTypeList}
+              options={optionTypeList}
+              label="Device type"
             />
             <Dropdown
               label="Sort by:"

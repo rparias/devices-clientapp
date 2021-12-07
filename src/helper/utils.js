@@ -1,5 +1,5 @@
-export const filterByDeviceType = (deviceType, devices) => {
-  return devices.filter((device) => device.type === deviceType)
+export const filterByDeviceType = (deviceTypes, devices) => {
+  return devices.filter((device) => deviceTypes.includes(device.type))
 }
 
 export const sortInAlphabeticalOrder = (devices) => {

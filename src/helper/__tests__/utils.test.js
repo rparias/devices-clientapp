@@ -28,7 +28,7 @@ describe('Utils helper functions', () => {
     }
   ]
   it('should return a filterd list by device type', () => {
-    const result = filterByDeviceType('WINDOWS_WORKSTATION', devices)
+    const result = filterByDeviceType(['WINDOWS_WORKSTATION'], devices)
     expect(result).toEqual([
       {
         id: 'e8okoP2l5',
@@ -77,7 +77,6 @@ describe('Utils helper functions', () => {
 
   it('should return a list sorted by hdd capacity from low to high', () => {
     const result = sortByHddCapacityLowToHigh(devices)
-    console.log({ result })
     expect(result).toEqual([
       {
         id: 'e8okoP2l5',
