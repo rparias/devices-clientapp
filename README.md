@@ -5,7 +5,6 @@ During the development of this project a Dashboard to work with devices was impl
 
 ![image](https://user-images.githubusercontent.com/22307059/145052387-ef54e7b5-a7ff-491b-9a14-58a47af72c2b.png)
 
-
 ## Setup configuration
 
 Before to run the application open the `.env` file in the root of the project and update the values:
