@@ -22,6 +22,7 @@ module.exports = {
   rules: {
     semi: ['error', 'never'],
     'multiline-ternary': ['error', 'never'],
+    'react-hooks/exhaustive-deps': 'off',
     'space-before-function-paren': [
       'error',
       {
