@@ -6,12 +6,12 @@ import CircularProgress from '@mui/material/CircularProgress'
 import ModalDialog from '../../components/patterns/ModalDialog'
 import { DashboardContainer, HeaderContainer } from './styles'
 import { filterDeviceTypeList, filterSortByList } from '../../data/dropdown_options'
+import Api from '../../helper/api'
 import {
   filterByDeviceType,
   sortInAlphabeticalOrder,
   sortByHddCapacityLowToHigh
 } from '../../helper/utils'
-import Api from '../../helper/api'
 
 const Dashboard = () => {
   const api = new Api()
