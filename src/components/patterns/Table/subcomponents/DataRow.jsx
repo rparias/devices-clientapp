@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Button from '../../../elements/Button'
 import { tableHeaders } from '../constants'
+import AlertDialog from '../../AlertDialog'
+import Api from '../../../../helper/api'
 
 const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice, handleOnOpenDialog }) => {
+  const api = new Api()
+  const [openAlert, setOpenAlert] = useState(false)
+
+  const handleClose = () => {
+    setOpenAlert(false)
+  }
+
   const getCurrentDevice = () => {
     setCurrentDevice({
       id,
@@ -12,29 +21,45 @@ const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice, handleOn
       capacity: hddCapacity
     })
   }
+
   const handleClickUpdate = () => {
     getCurrentDevice()
     handleOnOpenDialog()
   }
+
   const handleClickDelete = () => {
     getCurrentDevice()
+    setOpenAlert(true)
   }
+
+  const handleDelete = async () => {
+    try {
+      await api.deleteDevice(id)
+      window.location.reload(false)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
-    <tr key={id}>
-      <td data-label={tableHeaders.SYSTEM_NAME} className="uppercase">
-        {systemName}
-      </td>
-      <td data-label={tableHeaders.TYPE}>{type}</td>
-      <td data-label={tableHeaders.HDD_CAPACITY}>{`${hddCapacity} GB`}</td>
-      <td data-label={tableHeaders.ACTIONS} className="flex" style={{ justifyContent: 'center' }}>
-        <Button variant="secondary" size="sm" onClick={handleClickUpdate}>
-          Update
-        </Button>
-        <Button variant="danger" size="sm" onClick={handleClickDelete}>
-          Delete
-        </Button>
-      </td>
-    </tr>
+    <>
+      <tr key={id}>
+        <td data-label={tableHeaders.SYSTEM_NAME} className="uppercase">
+          {systemName}
+        </td>
+        <td data-label={tableHeaders.TYPE}>{type}</td>
+        <td data-label={tableHeaders.HDD_CAPACITY}>{`${hddCapacity} GB`}</td>
+        <td data-label={tableHeaders.ACTIONS} className="flex" style={{ justifyContent: 'center' }}>
+          <Button variant="secondary" size="sm" onClick={handleClickUpdate}>
+            Update
+          </Button>
+          <Button variant="danger" size="sm" onClick={handleClickDelete}>
+            Delete
+          </Button>
+        </td>
+      </tr>
+      <AlertDialog open={openAlert} handleOnClose={handleClose} handleDelete={handleDelete} />
+    </>
   )
 }
 

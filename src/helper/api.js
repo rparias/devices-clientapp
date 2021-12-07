@@ -31,4 +31,8 @@ export default class Api {
   updateDevice = (data) => {
     return this.init().put(`/devices/${data.id}`, data)
   }
+
+  deleteDevice = (id) => {
+    return this.init().delete(`/devices/${id}`)
+  }
 }
