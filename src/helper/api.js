@@ -27,4 +27,8 @@ export default class Api {
   addNewDevice = (data) => {
     return this.init().post('/devices', data)
   }
+
+  updateDevice = (data) => {
+    return this.init().put(`/devices/${data.id}`, data)
+  }
 }

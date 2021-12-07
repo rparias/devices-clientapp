@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Button from '../../../elements/Button'
 import { tableHeaders } from '../constants'
 
-const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice }) => {
+const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice, handleOnOpenDialog }) => {
   const getCurrentDevice = () => {
     setCurrentDevice({
       id,
@@ -14,6 +14,7 @@ const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice }) => {
   }
   const handleClickUpdate = () => {
     getCurrentDevice()
+    handleOnOpenDialog()
   }
   const handleClickDelete = () => {
     getCurrentDevice()
@@ -42,7 +43,8 @@ DataRow.propTypes = {
   systemName: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   hddCapacity: PropTypes.string.isRequired,
-  setCurrentDevice: PropTypes.func
+  setCurrentDevice: PropTypes.func,
+  handleOnOpenDialog: PropTypes.func
 }
 
 export default DataRow

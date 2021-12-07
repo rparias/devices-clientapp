@@ -67,7 +67,11 @@ const Dashboard = () => {
         {isLoading ? (
           <CircularProgress />
         ) : (
-          <Table devicesData={devicesList} setCurrentDevice={setCurrentDevice} />
+          <Table
+            devicesData={devicesList}
+            setCurrentDevice={setCurrentDevice}
+            handleOnOpenDialog={handleOnOpenDialog}
+          />
         )}
         {hasError && <p className="text-red">Something went wrong, please try again!</p>}
       </DashboardContainer>

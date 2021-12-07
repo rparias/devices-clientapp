@@ -27,18 +27,19 @@ const Form = ({ handleOnClose, device }) => {
     setFormValues({ ...formValues, [name]: value })
   }
 
-  const updateDevice = () => {
-    console.log('update device')
-  }
-
-  const createDevice = async () => {
+  const handleDevice = async () => {
     try {
       const newDevice = {
         system_name: formValues.name,
         type: formValues.type,
         hdd_capacity: formValues.capacity
       }
-      await api.addNewDevice(newDevice)
+      if (isObjectEmpty(device)) {
+        await api.addNewDevice(newDevice)
+      } else {
+        newDevice.id = device.id
+        await api.updateDevice(newDevice)
+      }
     } catch (error) {
       console.error(error)
     }
@@ -51,13 +52,7 @@ const Form = ({ handleOnClose, device }) => {
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmitted) {
-      if (isObjectEmpty(device)) {
-        console.log('create device')
-        createDevice()
-      } else {
-        console.log('update device')
-        updateDevice()
-      }
+      handleDevice()
       handleOnCloseForm()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,7 +65,7 @@ const Form = ({ handleOnClose, device }) => {
           label="System Name *"
           placeholder="System Name"
           name="name"
-          value={formValues.systemName}
+          value={formValues.name || ''}
           required={false}
           error={formErrors.name}
           onChange={handleOnChange}
@@ -79,7 +74,7 @@ const Form = ({ handleOnClose, device }) => {
           label="HDD Capacity (GB) *"
           placeholder="HDD Capacity"
           name="capacity"
-          value={formValues.hddCapacity}
+          value={formValues.capacity || ''}
           type="number"
           required={false}
           error={formErrors.capacity}
