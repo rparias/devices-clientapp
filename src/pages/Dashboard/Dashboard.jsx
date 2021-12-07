@@ -6,6 +6,11 @@ import CircularProgress from '@mui/material/CircularProgress'
 import ModalDialog from '../../components/patterns/ModalDialog'
 import { DashboardContainer, HeaderContainer } from './styles'
 import { filterDeviceTypeList, filterSortByList } from '../../data/dropdown_options'
+import {
+  filterByDeviceType,
+  sortInAlphabeticalOrder,
+  sortByHddCapacityLowToHigh
+} from '../../helper/utils'
 import Api from '../../helper/api'
 
 const Dashboard = () => {
@@ -15,6 +20,8 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [currentDevice, setCurrentDevice] = useState({})
+  const [filterBy, setFilterBy] = useState('all')
+  const [sortBy, setSortBy] = useState('hdd-capacity')
 
   const handleOnOpenDialog = () => {
     setOpenDialog(true)
@@ -27,6 +34,16 @@ const Dashboard = () => {
   const handleOnAddDevice = () => {
     setCurrentDevice({})
     handleOnOpenDialog()
+  }
+
+  const handleOnChangeFilterByDeviceType = (e) => {
+    const { value } = e.target
+    setFilterBy(value)
+  }
+
+  const handleOnChangeSortBy = (e) => {
+    const { value } = e.target
+    setSortBy(value)
   }
 
   useEffect(() => {
@@ -54,8 +71,20 @@ const Dashboard = () => {
       <DashboardContainer>
         <div className="flex space-between options">
           <div className="flex options">
-            <Dropdown label="Device Type:" name="type" optionsDropdown={filterDeviceTypeList} />
-            <Dropdown label="Sort by:" name="sort" optionsDropdown={filterSortByList} />
+            <Dropdown
+              label="Device Type:"
+              name="type"
+              value={filterBy}
+              onChange={handleOnChangeFilterByDeviceType}
+              optionsDropdown={filterDeviceTypeList}
+            />
+            <Dropdown
+              label="Sort by:"
+              name="sort"
+              value={sortBy}
+              onChange={handleOnChangeSortBy}
+              optionsDropdown={filterSortByList}
+            />
           </div>
           <Button onClick={handleOnAddDevice}>Add Device</Button>
         </div>
