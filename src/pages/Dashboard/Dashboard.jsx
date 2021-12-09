@@ -8,10 +8,12 @@ import MultipleSelect from '../../components/patterns/MultipleSelect'
 import { DashboardContainer, HeaderContainer } from './styles'
 import { optionTypeList, filterSortByList } from '../../data/dropdown_options'
 import { filterAndSortDevices } from '../../helper/utils'
+import { createBrowserHistory } from 'history'
 import Api from '../../helper/api'
 
 const Dashboard = () => {
   const api = new Api()
+  const history = createBrowserHistory()
   const [openDialog, setOpenDialog] = useState(false)
   const [devicesList, setDevicesList] = useState([])
   const [filteredDevicesList, setFilteredDevicesList] = useState([])
@@ -34,14 +36,22 @@ const Dashboard = () => {
     handleOnOpenDialog()
   }
 
+  const updateUrl = (filterBy, sortBy) => {
+    const url = `?filter=${filterBy.join(',')}&sort=${sortBy}`
+    history.replace(url)
+  }
+
   const handleOnChangeFilterByDeviceType = (e) => {
     const { value } = e.target
-    setFilterBy(typeof value === 'string' ? value.split(',') : value)
+    const values = typeof value === 'string' ? value.split(',') : value
+    setFilterBy(values)
+    updateUrl(values, sortBy)
   }
 
   const handleOnChangeSortBy = (e) => {
     const { value } = e.target
     setSortBy(value)
+    updateUrl(filterBy, value)
   }
 
   useEffect(() => {
