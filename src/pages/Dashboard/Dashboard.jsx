@@ -7,9 +7,10 @@ import ModalDialog from '../../components/patterns/ModalDialog'
 import MultipleSelect from '../../components/patterns/MultipleSelect'
 import { DashboardContainer, HeaderContainer } from './styles'
 import { optionTypeList, filterSortByList } from '../../data/dropdown_options'
-import { filterAndSortDevices } from '../../helper/utils'
+import { filterAndSortDevices, convertStringToArray } from '../../helper/utils'
 import { createBrowserHistory } from 'history'
 import Api from '../../helper/api'
+import qs from 'qs'
 
 const Dashboard = () => {
   const api = new Api()
@@ -43,7 +44,7 @@ const Dashboard = () => {
 
   const handleOnChangeFilterByDeviceType = (e) => {
     const { value } = e.target
-    const values = typeof value === 'string' ? value.split(',') : value
+    const values = convertStringToArray(value)
     setFilterBy(values)
     updateUrl(values, sortBy)
   }
@@ -54,13 +55,24 @@ const Dashboard = () => {
     updateUrl(filterBy, value)
   }
 
+  const getParametersFromUrl = () => {
+    const { search } = history.location
+    const { filter, sort } = qs.parse(search, { ignoreQueryPrefix: true })
+    return { filter, sort }
+  }
+
   useEffect(() => {
     setIsLoading(true)
     const fetchDevices = async () => {
       try {
+        const { filter, sort } = getParametersFromUrl()
+        const currentFilter = filter || filterBy
+        const currentSort = sort || sortBy
+        setSortBy(currentSort)
+        setFilterBy(convertStringToArray(currentFilter))
         const response = await api.getDevices()
         setDevicesList(response.data)
-        setFilteredDevicesList(filterAndSortDevices(filterBy, sortBy, response.data))
+        setFilteredDevicesList(filterAndSortDevices(currentFilter, currentSort, response.data))
         setHasError(false)
       } catch (error) {
         setHasError(true)

@@ -50,3 +50,7 @@ export const filterAndSortDevices = (deviceTypes, sortBy, devicesList) => {
   }
   return devices
 }
+
+export const convertStringToArray = (string) => {
+  return typeof string === 'string' ? string.split(',') : string
+}

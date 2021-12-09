@@ -1,4 +1,9 @@
-import { filterByDeviceType, sortInAlphabeticalOrder, sortByHddCapacityLowToHigh } from '../utils'
+import {
+  filterByDeviceType,
+  sortInAlphabeticalOrder,
+  sortByHddCapacityLowToHigh,
+  convertStringToArray
+} from '../utils'
 
 describe('Utils helper functions', () => {
   const devices = [
@@ -103,5 +108,10 @@ describe('Utils helper functions', () => {
         hdd_capacity: '2048'
       }
     ])
+  })
+
+  it('should convert a string to array of strings', () => {
+    const result = convertStringToArray('Windows_Workstation')
+    expect(result).toEqual(['Windows_Workstation'])
   })
 })
