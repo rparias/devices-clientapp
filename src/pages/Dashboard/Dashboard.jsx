@@ -7,12 +7,8 @@ import ModalDialog from '../../components/patterns/ModalDialog'
 import MultipleSelect from '../../components/patterns/MultipleSelect'
 import { DashboardContainer, HeaderContainer } from './styles'
 import { optionTypeList, filterSortByList } from '../../data/dropdown_options'
+import { filterAndSortDevices } from '../../helper/utils'
 import Api from '../../helper/api'
-import {
-  filterByDeviceType,
-  sortInAlphabeticalOrder,
-  sortByHddCapacityLowToHigh
-} from '../../helper/utils'
 
 const Dashboard = () => {
   const api = new Api()
@@ -54,7 +50,7 @@ const Dashboard = () => {
       try {
         const response = await api.getDevices()
         setDevicesList(response.data)
-        setFilteredDevicesList(sortByHddCapacityLowToHigh(response.data))
+        setFilteredDevicesList(filterAndSortDevices(filterBy, sortBy, response.data))
         setHasError(false)
       } catch (error) {
         setHasError(true)
@@ -67,25 +63,7 @@ const Dashboard = () => {
   }, [])
 
   useEffect(() => {
-    let filterDevices = []
-
-    if (filterBy.length === 0) {
-      filterDevices = [...devicesList]
-    } else {
-      filterDevices = filterByDeviceType(filterBy, devicesList)
-    }
-
-    const devices = [...filterDevices]
-    switch (sortBy) {
-      case 'hdd-capacity':
-        setFilteredDevicesList(sortByHddCapacityLowToHigh(devices))
-        break
-      case 'system-name':
-        setFilteredDevicesList(sortInAlphabeticalOrder(devices))
-        break
-      default:
-        break
-    }
+    setFilteredDevicesList(filterAndSortDevices(filterBy, sortBy, devicesList))
   }, [sortBy, filterBy])
 
   return (

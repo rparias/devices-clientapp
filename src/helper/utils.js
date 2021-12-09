@@ -25,3 +25,28 @@ export const sortByHddCapacityLowToHigh = (devices) => {
     return 0
   })
 }
+
+export const filterAndSortDevices = (deviceTypes, sortBy, devicesList) => {
+  let filterDevices = []
+  let devices = []
+
+  if (deviceTypes.length === 0) {
+    filterDevices = [...devicesList]
+  } else {
+    filterDevices = filterByDeviceType(deviceTypes, devicesList)
+  }
+
+  const filteredDevices = [...filterDevices]
+  switch (sortBy) {
+    case 'hdd-capacity':
+      devices = sortByHddCapacityLowToHigh(filteredDevices)
+      break
+    case 'system-name':
+      devices = sortInAlphabeticalOrder(filteredDevices)
+      break
+    default:
+      devices = filteredDevices
+      break
+  }
+  return devices
+}
