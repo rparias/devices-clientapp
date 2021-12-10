@@ -26,6 +26,10 @@ export const sortByHddCapacityLowToHigh = (devices) => {
   })
 }
 
+export const filterBySystemName = (systemName, devices) => {
+  return devices.filter((device) => device.system_name.includes(systemName))
+}
+
 export const filterAndSortDevices = (deviceTypes, sortBy, devicesList) => {
   let filterDevices = []
   let devices = []
