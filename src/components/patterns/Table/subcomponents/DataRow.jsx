@@ -3,10 +3,9 @@ import PropTypes from 'prop-types'
 import Button from '../../../elements/Button'
 import { tableHeaders } from '../constants'
 import AlertDialog from '../../AlertDialog'
-import Api from '../../../../helper/api'
+import { deleteDevice } from '../../../../helper/api/deleteDevice'
 
 const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice, handleOnOpenDialog }) => {
-  const api = new Api()
   const [openAlert, setOpenAlert] = useState(false)
 
   const handleClose = () => {
@@ -34,7 +33,7 @@ const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice, handleOn
 
   const handleDelete = async () => {
     try {
-      await api.deleteDevice(id)
+      await deleteDevice(id)
       window.location.reload(false)
     } catch (error) {
       console.error(error)

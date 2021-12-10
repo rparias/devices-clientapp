@@ -6,10 +6,10 @@ import InputField from '../../elements/InputField/InputField'
 import FormContainer from './styles'
 import { optionTypeList } from '../../../data/dropdown_options'
 import { validateForm, isObjectEmpty } from './utils'
-import Api from '../../../helper/api'
+import { addNewDevice } from '../../../helper/api/addNewDevice'
+import { updateDevice } from '../../../helper/api/updateDevice'
 
 const Form = ({ handleOnClose, device }) => {
-  const api = new Api()
   const initialValues = { name: '', type: optionTypeList[0].value, capacity: undefined }
 
   const [formValues, setFormValues] = useState(isObjectEmpty(device) ? initialValues : device)
@@ -35,10 +35,10 @@ const Form = ({ handleOnClose, device }) => {
         hdd_capacity: formValues.capacity
       }
       if (isObjectEmpty(device)) {
-        await api.addNewDevice(newDevice)
+        await addNewDevice(newDevice)
       } else {
         newDevice.id = device.id
-        await api.updateDevice(newDevice)
+        await updateDevice(newDevice)
       }
     } catch (error) {
       console.error(error)

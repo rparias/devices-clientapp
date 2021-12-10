@@ -9,11 +9,10 @@ import { DashboardContainer, HeaderContainer } from './styles'
 import { optionTypeList, filterSortByList } from '../../data/dropdown_options'
 import { filterAndSortDevices, convertStringToArray } from '../../helper/utils'
 import { createBrowserHistory } from 'history'
-import Api from '../../helper/api'
+import { getDevices } from '../../helper/api/getDevices'
 import qs from 'qs'
 
 const Dashboard = () => {
-  const api = new Api()
   const devicesListReference = useRef([])
   const history = createBrowserHistory()
   const [openDialog, setOpenDialog] = useState(false)
@@ -70,7 +69,7 @@ const Dashboard = () => {
         const currentSort = sort || sortBy
         setSortBy(currentSort)
         setFilterBy(convertStringToArray(currentFilter))
-        const response = await api.getDevices()
+        const response = await getDevices()
         devicesListReference.current = response.data
         setFilteredDevicesList(filterAndSortDevices(currentFilter, currentSort, response.data))
         setHasError(false)
