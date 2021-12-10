@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Button from '../../components/elements/Button'
 import Dropdown from '../../components/elements/Dropdown'
 import Table from '../../components/patterns/Table'
@@ -14,9 +14,9 @@ import qs from 'qs'
 
 const Dashboard = () => {
   const api = new Api()
+  const devicesListReference = useRef([])
   const history = createBrowserHistory()
   const [openDialog, setOpenDialog] = useState(false)
-  const [devicesList, setDevicesList] = useState([])
   const [filteredDevicesList, setFilteredDevicesList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
@@ -71,7 +71,7 @@ const Dashboard = () => {
         setSortBy(currentSort)
         setFilterBy(convertStringToArray(currentFilter))
         const response = await api.getDevices()
-        setDevicesList(response.data)
+        devicesListReference.current = response.data
         setFilteredDevicesList(filterAndSortDevices(currentFilter, currentSort, response.data))
         setHasError(false)
       } catch (error) {
@@ -82,10 +82,11 @@ const Dashboard = () => {
       }
     }
     fetchDevices()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    setFilteredDevicesList(filterAndSortDevices(filterBy, sortBy, devicesList))
+    setFilteredDevicesList(filterAndSortDevices(filterBy, sortBy, devicesListReference.current))
   }, [sortBy, filterBy])
 
   return (
