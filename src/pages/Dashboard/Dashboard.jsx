@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '../../components/elements/Button'
 import Dropdown from '../../components/elements/Dropdown'
 import Table from '../../components/patterns/Table'
@@ -10,10 +10,10 @@ import { optionTypeList, filterSortByList } from '../../data/dropdown_options'
 import { filterAndSortDevices, convertStringToArray } from '../../helper/utils'
 import { createBrowserHistory } from 'history'
 import { getDevices } from '../../helper/api/getDevices'
+import useDevice from '../../hooks/useDevice'
 import qs from 'qs'
 
 const Dashboard = () => {
-  const devicesListReference = useRef([])
   const history = createBrowserHistory()
   const [openDialog, setOpenDialog] = useState(false)
   const [filteredDevicesList, setFilteredDevicesList] = useState([])
@@ -22,6 +22,7 @@ const Dashboard = () => {
   const [currentDevice, setCurrentDevice] = useState({})
   const [filterBy, setFilterBy] = useState([])
   const [sortBy, setSortBy] = useState('hdd-capacity')
+  const [devicesList, setDevicesList, addDevice, updateDevice, deleteDevice] = useDevice([])
 
   const handleOnOpenDialog = () => {
     setOpenDialog(true)
@@ -70,7 +71,7 @@ const Dashboard = () => {
         setSortBy(currentSort)
         setFilterBy(convertStringToArray(currentFilter))
         const response = await getDevices()
-        devicesListReference.current = response.data
+        setDevicesList(response.data)
         setFilteredDevicesList(filterAndSortDevices(currentFilter, currentSort, response.data))
         setHasError(false)
       } catch (error) {
@@ -85,8 +86,8 @@ const Dashboard = () => {
   }, [])
 
   useEffect(() => {
-    setFilteredDevicesList(filterAndSortDevices(filterBy, sortBy, devicesListReference.current))
-  }, [sortBy, filterBy])
+    setFilteredDevicesList(filterAndSortDevices(filterBy, sortBy, devicesList))
+  }, [sortBy, filterBy, devicesList])
 
   return (
     <>
@@ -116,6 +117,8 @@ const Dashboard = () => {
           open={openDialog}
           handleOnClose={handleOnCloseDialog}
           currentDevice={currentDevice}
+          addDevice={addDevice}
+          updateDevice={updateDevice}
         />
         {isLoading ? (
           <CircularProgress />
@@ -124,6 +127,8 @@ const Dashboard = () => {
             devicesData={filteredDevicesList}
             setCurrentDevice={setCurrentDevice}
             handleOnOpenDialog={handleOnOpenDialog}
+            updateDevice={updateDevice}
+            deleteDevice={deleteDevice}
           />
         )}
         {hasError && <p className="text-red">Something went wrong, please try again!</p>}

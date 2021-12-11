@@ -4,7 +4,7 @@ import TableContainer from './styles'
 import DataRow from './subcomponents/DataRow'
 import { tableHeaders } from './constants'
 
-const Table = ({ devicesData, setCurrentDevice, handleOnOpenDialog }) => {
+const Table = ({ devicesData, setCurrentDevice, handleOnOpenDialog, deleteDevice }) => {
   return (
     <TableContainer>
       {devicesData.length > 0 ? (
@@ -28,6 +28,7 @@ const Table = ({ devicesData, setCurrentDevice, handleOnOpenDialog }) => {
                 hddCapacity={device.hdd_capacity}
                 setCurrentDevice={setCurrentDevice}
                 handleOnOpenDialog={handleOnOpenDialog}
+                deleteDevice={deleteDevice}
               />
             ))}
           </tbody>
@@ -53,7 +54,8 @@ Table.propTypes = {
     })
   ),
   setCurrentDevice: PropTypes.func,
-  handleOnOpenDialog: PropTypes.func
+  handleOnOpenDialog: PropTypes.func,
+  deleteDevice: PropTypes.func
 }
 
 export default Table

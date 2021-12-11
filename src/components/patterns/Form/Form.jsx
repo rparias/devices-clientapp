@@ -9,7 +9,7 @@ import { validateForm, isObjectEmpty } from './utils'
 import { addNewDevice } from '../../../helper/api/addNewDevice'
 import { updateDevice } from '../../../helper/api/updateDevice'
 
-const Form = ({ handleOnClose, device }) => {
+const Form = ({ handleOnClose, device, addDevice, updateDevice: onUpdateDevice }) => {
   const initialValues = { name: '', type: optionTypeList[0].value, capacity: undefined }
 
   const [formValues, setFormValues] = useState(isObjectEmpty(device) ? initialValues : device)
@@ -35,10 +35,16 @@ const Form = ({ handleOnClose, device }) => {
         hdd_capacity: formValues.capacity
       }
       if (isObjectEmpty(device)) {
-        await addNewDevice(newDevice)
+        const result = await addNewDevice(newDevice)
+        if (result.status === 200) {
+          addDevice(result.data)
+        }
       } else {
         newDevice.id = device.id
-        await updateDevice(newDevice)
+        const result = await updateDevice(newDevice)
+        if (result.status === 200) {
+          onUpdateDevice(newDevice)
+        }
       }
     } catch (error) {
       console.error(error)
@@ -47,7 +53,6 @@ const Form = ({ handleOnClose, device }) => {
 
   const handleOnCloseForm = () => {
     handleOnClose()
-    window.location.reload(false)
   }
 
   useEffect(() => {
@@ -98,6 +103,8 @@ const Form = ({ handleOnClose, device }) => {
 
 Form.propTypes = {
   handleOnClose: PropTypes.func,
+  addDevice: PropTypes.func,
+  updateDevice: PropTypes.func,
   device: PropTypes.shape({
     id: PropTypes.string,
     system_name: PropTypes.string,

@@ -5,7 +5,15 @@ import { tableHeaders } from '../constants'
 import AlertDialog from '../../AlertDialog'
 import { deleteDevice } from '../../../../helper/api/deleteDevice'
 
-const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice, handleOnOpenDialog }) => {
+const DataRow = ({
+  id,
+  systemName,
+  type,
+  hddCapacity,
+  setCurrentDevice,
+  handleOnOpenDialog,
+  deleteDevice: onDeleteDevice
+}) => {
   const [openAlert, setOpenAlert] = useState(false)
 
   const handleClose = () => {
@@ -33,8 +41,11 @@ const DataRow = ({ id, systemName, type, hddCapacity, setCurrentDevice, handleOn
 
   const handleDelete = async () => {
     try {
-      await deleteDevice(id)
-      window.location.reload(false)
+      const result = await deleteDevice(id)
+      if (result.status === 200) {
+        onDeleteDevice(id)
+        handleClose()
+      }
     } catch (error) {
       console.error(error)
     }
@@ -68,7 +79,8 @@ DataRow.propTypes = {
   type: PropTypes.string.isRequired,
   hddCapacity: PropTypes.string.isRequired,
   setCurrentDevice: PropTypes.func,
-  handleOnOpenDialog: PropTypes.func
+  handleOnOpenDialog: PropTypes.func,
+  deleteDevice: PropTypes.func
 }
 
 export default DataRow

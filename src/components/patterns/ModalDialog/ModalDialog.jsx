@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import PropTypes from 'prop-types'
 
-const ModalDialog = ({ open, handleOnClose, currentDevice }) => {
+const ModalDialog = ({ open, handleOnClose, currentDevice, addDevice, updateDevice }) => {
   return (
     <Dialog
       open={open}
@@ -15,7 +15,12 @@ const ModalDialog = ({ open, handleOnClose, currentDevice }) => {
     >
       <DialogTitle>Device Attributes</DialogTitle>
       <DialogContent>
-        <Form handleOnClose={handleOnClose} device={currentDevice} />
+        <Form
+          handleOnClose={handleOnClose}
+          device={currentDevice}
+          addDevice={addDevice}
+          updateDevice={updateDevice}
+        />
       </DialogContent>
     </Dialog>
   )
@@ -24,7 +29,9 @@ const ModalDialog = ({ open, handleOnClose, currentDevice }) => {
 ModalDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   handleOnClose: PropTypes.func.isRequired,
-  currentDevice: PropTypes.object
+  currentDevice: PropTypes.object,
+  addDevice: PropTypes.func,
+  updateDevice: PropTypes.func
 }
 
 export default ModalDialog
