@@ -43,6 +43,7 @@ const DataRow = ({
     try {
       const result = await deleteDevice(id)
       if (result.status === 200) {
+        // result.data should be 1 if deleted successfully
         onDeleteDevice(id)
         handleClose()
       }

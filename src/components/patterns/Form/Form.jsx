@@ -43,6 +43,7 @@ const Form = ({ handleOnClose, device, addDevice, updateDevice: onUpdateDevice }
         newDevice.id = device.id
         const result = await updateDevice(newDevice)
         if (result.status === 200) {
+          // result.data should be 1 if updated successfully
           onUpdateDevice(newDevice)
         }
       }

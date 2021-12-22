@@ -12,9 +12,13 @@ const useDevice = (initialValue = []) => {
   }
 
   const updateDevice = (device) => {
-    const deviceIndex = devicesList.findIndex((currentDevice) => currentDevice.id === device.id)
-    const newDevicesList = [...devicesList]
-    newDevicesList[deviceIndex] = device
+    const newDevicesList = devicesList.map((currentDevice) => {
+      if (currentDevice.id === device.id) {
+        return device
+      } else {
+        return currentDevice
+      }
+    })
     setDevicesList(newDevicesList)
   }
 
